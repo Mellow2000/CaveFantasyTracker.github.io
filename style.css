@@ -5,8 +5,8 @@ body {
   justify-content: center;
 }
 .slot { 
-  margin: 8px; 
-  padding: 20px; 
+  margin: 15px; 
+  padding: 30px; 
   border-radius: 12px;
    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
   background: linear-gradient(135deg, #6366f1, #4f46e5);
@@ -27,14 +27,14 @@ body {
 .btn-group {
   display: flex;
   justify-content: center;
-  gap: 5px;
-  margin-top: 5px;
+  gap: 8px;
+  margin-top: 8px;
 }
 
 /* ปุ่มขนาดเท่ากัน */
 button {
-  width: 90px;
-  height: 60px;
+  width: 50px;
+  height: 40px;
 
   display: flex;
   align-items: center;
@@ -50,8 +50,8 @@ button {
 
   border: 1px solid rgba(255,255,255,0.15);
 
-  font-size: 18px;   /* 👈 เพิ่ม */
-  font-weight: 700;  /* (เสริม) ให้ชัดขึ้น */
+  font-size: 14px;   /* 👈 เพิ่ม */
+  font-weight: 600;  /* (เสริม) ให้ชัดขึ้น */
 }
 
 .btn-group button:hover {
@@ -319,7 +319,8 @@ button {
 
 .full .full-text {
   color: #fff;
-  font-weight: 900;
+  font-weight: 600;
+  font-size: 20px;
 }
 
 
@@ -327,7 +328,7 @@ button {
   margin-left: 6px;
   padding: 2px 8px;
   border-radius: 999px;
-  font-size: 13px;
+  font-size: 18px !important;
   font-weight: 800;
   
 }
@@ -390,7 +391,7 @@ button {
 
 /* เวลา */
 .time {
-  font-weight: 700;
+  font-weight: 600;
   font-size: 20px;
 }
 
@@ -726,6 +727,105 @@ body.light .title span {
   0% { transform: scale(1); }
   50% { transform: scale(1.02); }
   100% { transform: scale(1); }
+}
+
+.input-add-group {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.input-count {
+  width: 105px;
+  height: 40px;
+  text-align: center;
+  font-size: 18px;
+  font-weight: 700;
+  border-radius: 8px;
+  border: none;
+  background: rgba(255,255,255,0.2);
+  color: #fff;
+}
+
+.btn-input-add {
+  width: 50px;
+  height: 40px;
+  font-size: 24px;
+  font-weight: 900;
+  border-radius: 8px;
+  background: #22c55e;
+  color: white;
+}
+
+.btn-input-add:hover {
+  background: #16a34a;
+}
+
+body.light .input-count {
+  background: #fff;
+  color: #111;
+  border: 1px solid #ddd;
+}
+
+.status-text {
+  display: inline-block;   /* 👈 ทำให้เป็นก้อน */
+  
+  font-size: 13px;
+  font-weight: 800;
+
+  padding: 3px 10px;
+  border-radius: 999px;   /* 👈 pill shape */
+
+  margin-bottom: 6px;
+
+  background: rgba(255,255,255,0.2);
+  color: #fff;
+}
+
+/* 🟢 ว่าง */
+.status-text.available {
+  background: #22c55e;   /* เขียวชัด */
+  color: white;          /* ตัวอักษรขาว */
+
+  box-shadow: 0 2px 8px rgba(34,197,94,0.5);
+}
+
+/* 🔴 เต็ม */
+.status-text.full-text {
+  background: #ef4444;
+  color: white;
+}
+
+.status-text {
+  border: 1px solid rgba(255,255,255,0.2);
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+}
+
+#app .slot #label_0_0, 
+#app .slot div[id^="label_"] {
+  display: flex;
+  flex-direction: column;   /* 👈 เรียงบน → ล่าง */
+  align-items: center;
+}
+
+/* ซ่อนลูกศร Chrome, Edge, Safari */
+.input-count::-webkit-outer-spin-button,
+.input-count::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+
+/* DARK MODE */
+.input-count::placeholder {
+  color: rgba(255,255,255,0.5);   /* จางแต่ยังเห็น */
+}
+
+/* LIGHT MODE */
+body.light .input-count::placeholder {
+  color: rgba(0,0,0,0.4);
 }
 
 

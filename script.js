@@ -47,28 +47,42 @@ function createUI(){
     contentHTML += `<h1>${sec.name}</h1>`;
     
 
-    sec.slots.forEach((slot, i) => {
-      contentHTML += `
-        <div id="slot_${sIndex}_${i}" class="slot">
-          <div id="label_${sIndex}_${i}">
-            <span class="time">${slot}</span>
-            <span class="count">(0/${max})</span>
-          </div>
+sec.slots.forEach((slot, i) => {
+  contentHTML += `
+    <div id="slot_${sIndex}_${i}" class="slot">
+      <div id="label_${sIndex}_${i}">
+        <span class="time">${slot}</span>
+        <span class="count">(0/${max})</span>
+      </div>
 
-          <div class="btn-group plus">
-            <button onclick="update(${sIndex},${i},1)">+1</button>
-            <button onclick="update(${sIndex},${i},5)">+5</button>
-            <button onclick="update(${sIndex},${i},10)">+10</button>
-          </div>
+      <div class="btn-group plus">
+        <button onclick="update(${sIndex},${i},1)">+1</button>
+        <button onclick="update(${sIndex},${i},5)">+5</button>
+        <button onclick="update(${sIndex},${i},10)">+10</button>
+      </div>
 
-          <div class="btn-group minus">
-            <button onclick="update(${sIndex},${i},-1)">-1</button>
-            <button onclick="update(${sIndex},${i},-5)">-5</button>
-            <button onclick="update(${sIndex},${i},-10)">-10</button>
-          </div>
-        </div>
-      `;
-    });
+      <div class="btn-group minus">
+        <button onclick="update(${sIndex},${i},-1)">-1</button>
+        <button onclick="update(${sIndex},${i},-5)">-5</button>
+        <button onclick="update(${sIndex},${i},-10)">-10</button>
+      </div>
+
+      <div class="input-add-group">
+      <input
+        type="number"
+        min="0"
+        max="99"
+        placeholder="จำนวน"
+        class="input-count"
+        id="input_${sIndex}_${i}"
+        onfocus="this.value=''"
+        oninput="if(this.value.length > 2) this.value = this.value.slice(0,2)"
+      />
+        <button class="btn-input-add" onclick="addInputValue(${sIndex}, ${i})">+</button>
+      </div>
+    </div>
+  `;
+});
 
    contentHTML += `
     <div class="action-group">
@@ -108,27 +122,34 @@ function updateUI(){
         box.classList.add("full");
 
         label.innerHTML = `
-          <span class="time">${time}${icon}</span>
-          <span class="count">(${max}/${max})</span>
-          <span class="full-text">เต็ม</span>
+          <div class="status-text full-text">เต็ม</div>
+          
+          <div class="time-row">
+            <span class="time">${time}${icon}</span>
+            <span class="count">(${count}/${max})</span>
+          </div>
         `;
       }
-
-      // 🟠 ใกล้เต็ม 20/24
       else if(count >= 20){
         box.classList.add("warning");
 
         label.innerHTML = `
-          <span class="time">${time}${icon}</span>
-          <span class="count">(${count}/${max})</span>
+          <div class="status-text available">ว่าง</div>
+
+          <div class="time-row">
+            <span class="time">${time}${icon}</span>
+            <span class="count">(${count}/${max})</span>
+          </div>
         `;
       }
-
-      // 🔵 ปกติ
       else {
         label.innerHTML = `
-          <span class="time">${time}${icon}</span>
-          <span class="count">(${count}/${max})</span>
+          <div class="status-text available">ว่าง</div>
+
+          <div class="time-row">
+            <span class="time">${time}${icon}</span>
+            <span class="count">(${count}/${max})</span>
+          </div>
         `;
       }
 
@@ -373,6 +394,33 @@ function resetAll(){
 
   // update UI
   updateUI();
+}
+
+function addInputValue(sIndex, i){
+  const input = document.getElementById(`input_${sIndex}_${i}`);
+  let value = parseInt(input.value, 10);
+
+  if (isNaN(value) || value <= 0) {
+    return;
+  }
+
+  let current = sections[sIndex].counts[i];
+
+  if (current + value > max) {
+    alert("เกินไม่ได้ เหลืออีก " + (max - current));
+    return;
+  }
+
+  sections[sIndex].counts[i] += value;
+
+  saveData();
+  updateUI();
+
+  if (typeof summaryVisible !== "undefined" && summaryVisible[sIndex]) {
+    renderSummary(sIndex);
+  }
+
+  input.value = 0;
 }
 
 window.onclick = function(e){
