@@ -1,17 +1,17 @@
 let sections = [
   { 
     name: "FLY OVER FIVE CONTINENTS",
-    slots: ["11:00","11:15","11:30","11:45","14:00","14:15","14:30","14:45","17:00","17:15","17:30","17:45","20:00","20:15","20:30","20:45"],
+    slots: ["11:00 น.","11:15 น.","11:30 น.","11:45 น.","14:00 น.","14:15 น.","14:30 น.","14:45 น.","17:00 น.","17:15 น.","17:30 น.","17:45 น.","20:00 น.","20:15 น.","20:30 น.","20:45 น."],
     counts: []
   },
   { 
     name: "THE FURIOUS BEASTS",
-    slots: ["12:00","12:15","12:30","12:45","15:00","15:15","15:30","15:45","18:00","18:15","18:30","18:45"],
+    slots: ["12:00 น.","12:15 น.","12:30 น.","12:45 น.","15:00 น.","15:15 น.","15:30 น.","15:45 น.","18:00 น.","18:15 น.","18:30 น.","18:45 น."],
     counts: []
   },
   { 
     name: "NIGHTMARE ROLLERCOASTER",
-    slots: ["13:00","13:15","13:30","13:45","16:00","16:15","16:30","16:45","19:00","19:15","19:30","19:45","21:00"],
+    slots: ["13:00 น.","13:15 น.","13:30 น.","13:45 น.","16:00 น.","16:15 น.","16:30 น.","16:45 น.","19:00 น.","19:15 น.","19:30 น.","19:45 น.","21:00 น."],
     counts: []
   }
 ];
@@ -28,16 +28,23 @@ sections.forEach(sec => {
 function createUI(){
   let tabHTML = "";
   let contentHTML = "";
+  let icons = [
+  "images/fly.jpg",
+  "images/beast.jpg",
+  "images/roller.jpg"
+  ];
 
   sections.forEach((sec, sIndex) => {
-    // สร้าง tab
-    tabHTML += `<button class="tab-btn" id="tab_${sIndex}" onclick="showTab(${sIndex})">
-                ${sec.name} (0)
-                </button>`;
+    // สร้าง tab รูป
+    tabHTML += `
+      <button class="tab-btn" id="tab_${sIndex}" onclick="showTab(${sIndex})">
+        <img src="${icons[sIndex]}" class="tab-icon">
+      </button>
+    `;
 
     // section (ซ่อนไว้ก่อน)
     contentHTML += `<div class="section tab-content" id="section_${sIndex}" style="display:${sIndex===0?'block':'none'}">`;
-    contentHTML += `<h3>${sec.name}</h3>`;
+    contentHTML += `<h1>${sec.name}</h1>`;
     
 
     sec.slots.forEach((slot, i) => {
@@ -86,49 +93,57 @@ function createUI(){
 function updateUI(){
   sections.forEach((sec, sIndex) => {
 
-    let total = sec.counts.reduce((a,b)=>a+b,0);
-    document.getElementById(`tab_${sIndex}`).innerText = sec.name + " (" + total + ")";
-
     sec.counts.forEach((count, i) => {
       let label = document.getElementById(`label_${sIndex}_${i}`);
       let box = document.getElementById(`slot_${sIndex}_${i}`);
-      
       let time = sec.slots[i];
 
-      // 👉 ตรวจรอบพิเศษ
-      let isSpecial = time.endsWith(":15") || time.endsWith(":45");
+      let isSpecial = time.endsWith(":15 น.") || time.endsWith(":45 น.");
       let icon = isSpecial ? " ✦" : "";
 
-      // ลบ class เก่า
-      box.classList.remove("special-slot");
+      box.classList.remove("special-slot", "warning", "full");
 
-      if(isSpecial){
-        box.classList.add("special-slot");
-      }
-
-      // 👉 แสดงผล
+      // 🔴 เต็ม
       if(count >= max){
+        box.classList.add("full");
+
         label.innerHTML = `
           <span class="time">${time}${icon}</span>
           <span class="count">(${max}/${max})</span>
           <span class="full-text">เต็ม</span>
         `;
-        box.classList.add("full");
-      } else {
+      }
+
+      // 🟠 ใกล้เต็ม 20/24
+      else if(count >= 20){
+        box.classList.add("warning");
+
         label.innerHTML = `
           <span class="time">${time}${icon}</span>
           <span class="count">(${count}/${max})</span>
         `;
-        box.classList.remove("full");
       }
 
-      // 👉 ปุ่ม +
+      // 🔵 ปกติ
+      else {
+        label.innerHTML = `
+          <span class="time">${time}${icon}</span>
+          <span class="count">(${count}/${max})</span>
+        `;
+      }
+
+      // special slot logic
+      if(isSpecial){
+        box.classList.add("special-slot");
+      }
+
+      // disable +
       let plusBtns = box.querySelectorAll(".plus button");
       plusBtns.forEach(btn => {
         btn.disabled = (count >= max);
       });
 
-      // 👉 ปุ่ม -
+      // disable -
       let minusBtns = box.querySelectorAll(".minus button");
       minusBtns.forEach(btn => {
         btn.disabled = (count <= 0);
@@ -265,7 +280,6 @@ function update(sIndex, i, value){
   sections[sIndex].counts[i] += value;
 
   saveData();   // ✅ ต้องมีบรรทัดนี้
-
   updateUI();
 }
 

@@ -2,10 +2,11 @@ body {
   background: linear-gradient(135deg, #1e1e2f, #2a2a40);
   color: #fff;
   font-family: 'Segoe UI', sans-serif;
+  justify-content: center;
 }
 .slot { 
   margin: 8px; 
-  padding: 10px; 
+  padding: 20px; 
   border-radius: 12px;
    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
   background: linear-gradient(135deg, #6366f1, #4f46e5);
@@ -32,8 +33,8 @@ body {
 
 /* ปุ่มขนาดเท่ากัน */
 button {
-  width: 60px;
-  height: 35px;
+  width: 90px;
+  height: 60px;
 
   display: flex;
   align-items: center;
@@ -48,6 +49,9 @@ button {
   color: #ddd;
 
   border: 1px solid rgba(255,255,255,0.15);
+
+  font-size: 18px;   /* 👈 เพิ่ม */
+  font-weight: 700;  /* (เสริม) ให้ชัดขึ้น */
 }
 
 .btn-group button:hover {
@@ -80,23 +84,58 @@ button {
 /* container ของ tab */
 #tabs {
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
+  align-items: stretch;
   gap: 10px;
   margin-bottom: 15px;
+  margin-top: 20px;
   flex-wrap: wrap; /* กันล้นจอ */
 }
 
 /* ปุ่ม tab */
 .tab-btn {
-  padding: 10px 18px;
-  border-radius: 999px;
+  width: 175px;
+  height: 250px;
 
-  background: rgba(255,255,255,0.1);
-  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
-  font-weight: 600;
-  min-width: 180px;
-  transition: 0.2s;
+  border-radius: 8px;
+  border: 1px solid rgba(255,255,255,0.15);
+
+  background: rgba(255,255,255,0.06);
+  cursor: pointer;
+
+  transition: 0.2s ease;
+}
+
+.tab-btn:hover {
+  transform: translateY(-2px) scale(1.05);
+  background: rgba(255,255,255,0.15);
+}
+
+.tab-btn.active {
+  background: linear-gradient(135deg, #6366f1, #4f46e5);
+  box-shadow: 0 4px 15px rgba(99,102,241,0.4);
+}
+
+/* รูป */
+.tab-icon {
+  width: 200px;
+  height: 230px;
+
+  object-fit: contain; /* ไม่ crop */
+  border-radius: 8px;
+}
+
+/* ข้อความ */
+.tab-btn span {
+  white-space: normal;
+  text-align: center;
+  font-size: 12px;
+  max-width: 100%;
+  word-break: break-word;
 }
 
 .tab-btn:hover {
@@ -104,7 +143,8 @@ button {
 }
 
 .tab-btn.active {
-  background: #6366f1;
+  background: linear-gradient(135deg, #6366f1, #4f46e5);
+  box-shadow: 0 4px 15px rgba(99,102,241,0.4);
 }
 
 .tab-btn.active {
@@ -114,6 +154,7 @@ button {
 /* hover */
 .tab-btn:hover {
   background: #c7c7c7;
+  transform: translateX(-5px);
 }
 
 /* active */
@@ -281,10 +322,6 @@ button {
   font-weight: 900;
 }
 
-.time {
-  font-weight: 800;
-  font-size: 16px;
-}
 
 .count {
   margin-left: 6px;
@@ -294,8 +331,28 @@ button {
   font-weight: 800;
   
 }
+.btn-summary {
+  width: 160px;        /* 👈 เพิ่มขนาดปุ่ม */
+  height: 60px;
+
+  font-size: 18px;     /* 👈 ตัวหนังสือใหญ่ขึ้น */
+  font-weight: 600;
+}
+.btn-reset {
+  width: 160px;        /* 👈 เพิ่มขนาดปุ่ม */
+  height: 60px;
+
+  font-size: 18px;     /* 👈 ตัวหนังสือใหญ่ขึ้น */
+  font-weight: 600;
+}
 
 .btn-export {
+  width: 160px;        /* 👈 เพิ่มขนาดปุ่ม */
+  height: 60px;
+
+  font-size: 18px;     /* 👈 ตัวหนังสือใหญ่ขึ้น */
+  font-weight: 600;
+
   background: #2ecc71;
   color: white;
   border-radius: 8px;
@@ -334,7 +391,7 @@ button {
 /* เวลา */
 .time {
   font-weight: 700;
-  font-size: 16px;
+  font-size: 20px;
 }
 
 /* จำนวน */
@@ -343,7 +400,7 @@ button {
   padding: 3px 10px;
 
   border-radius: 999px;
-  font-size: 13px;
+  font-size: 20px;
   font-weight: 500;
 
   background: rgba(255,255,255,0.2);
@@ -354,6 +411,7 @@ button {
   color: #d32f2f;
   font-weight: 800;
   margin-left: 5px;
+  font-size: 30px;
 }
 
 /* LIGHT MODE */
@@ -574,4 +632,101 @@ body.light #themeToggle {
 #resetAllBtn:hover {
   background: #dc2626;
 }
+
+
+.main-layout {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 20px;   /* 👈 กันชิดขอบทั้งหน้า */
+}
+
+/* content ซ้าย */
+
+/* tabs ซ้าย */
+#tabs {
+  order: -1;
+  width: 220px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+
+  position: sticky;
+  top: 30px;
+
+  margin-left: 0; /* 👈 สำคัญ เอาออกหรือให้เป็น 0 */
+}
+
+
+.title {
+  text-align: left;
+  margin: 10px 20px 20px 20px;
+
+  font-size: 28px;
+  font-weight: 800;
+  letter-spacing: 1px;
+
+  color: #ffffff;
+
+  position: relative;
+}
+
+/* MBK ส่วนเล็ก */
+.title span {
+  font-size: 14px;
+  font-weight: 500;
+  color: rgba(255,255,255,0.6);
+  margin-left: 6px;
+}
+
+/* เส้นใต้สวยๆ */
+.title::after {
+  content: "";
+  display: block;
+
+  width: 80px;
+  height: 3px;
+  margin-top: 8px;
+
+  background: linear-gradient(90deg, #6366f1, #22c55e);
+  border-radius: 999px;
+}
+
+body.light .title {
+  color: #111;
+}
+
+body.light .title span {
+  color: rgba(0,0,0,0.5);
+}
+
+/* 🟠 ใกล้เต็ม 20/24 */
+.warning {
+  background: linear-gradient(135deg, #f59e0b, #f97316) !important;
+  color: white;
+  box-shadow: 0 6px 15px rgba(245, 158, 11, 0.4);
+  animation: warnPulse 1.2s infinite;
+}
+
+.warning .count {
+  background: rgba(0,0,0,0.2);
+  color: white;
+}
+
+/* 🔴 เต็ม */
+.full {
+  background: linear-gradient(135deg, #7f1d1d, #b91c1c) !important;
+  color: white;
+  animation: none;
+}
+
+/* pulse */
+@keyframes warnPulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.02); }
+  100% { transform: scale(1); }
+}
+
+
 
