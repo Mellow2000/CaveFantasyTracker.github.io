@@ -126,7 +126,7 @@ function updateUI(){
           
           <div class="time-row">
             <span class="time">${time}${icon}</span>
-            <span class="count">(${count}/${max})</span>
+            <span class="count">( ${count} )</span>
           </div>
         `;
       }
@@ -138,7 +138,7 @@ function updateUI(){
 
           <div class="time-row">
             <span class="time">${time}${icon}</span>
-            <span class="count">(${count}/${max})</span>
+            <span class="count">( ${count} )</span>
           </div>
         `;
       }
@@ -148,7 +148,7 @@ function updateUI(){
 
           <div class="time-row">
             <span class="time">${time}${icon}</span>
-            <span class="count">(${count}/${max})</span>
+            <span class="count">( ${count} )</span>
           </div>
         `;
       }
