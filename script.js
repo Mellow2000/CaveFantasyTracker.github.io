@@ -75,6 +75,7 @@ sec.slots.forEach((slot, i) => {
         placeholder="จำนวน"
         class="input-count"
         id="input_${sIndex}_${i}"
+        onkeydown="if(event.key === 'Enter') addInputValue(${sIndex}, ${i})"
         onfocus="this.value=''"
         oninput="if(this.value.length > 2) this.value = this.value.slice(0,2)"
       />
@@ -420,7 +421,7 @@ function addInputValue(sIndex, i){
     renderSummary(sIndex);
   }
 
-  input.value = 0;
+  input.value = '';
 }
 
 window.onclick = function(e){
